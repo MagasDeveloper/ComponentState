@@ -73,6 +73,18 @@ namespace Mahas.ComponentState
             OnChangeId?.Invoke(id);
             _onChange?.Invoke();
         }
+        
+        public void OverrideStateValue(TId id, TState state)
+        {
+            _statesMap[id] = state;
+            if (IsAlreadyActive(id))
+            {
+                ApplyState(state);
+                OnChangeState?.Invoke(state);
+                OnChangeId?.Invoke(id);
+                _onChange?.Invoke();
+            }
+        }
 
         protected abstract void ApplyState(TState state);
 
